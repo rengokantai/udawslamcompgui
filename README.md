@@ -36,3 +36,11 @@ delete function name
 ```
 aws lambda delete-function --function-name ke
 ```
+
+==
+- cp4
+```
+aws lambda create-function --region us-west-2 --function-name thumb --zip-file fileb://thumb.zip --role arn:aws:iam::6441268679:role/executionrole --handler thumb.handler --runtime nodejs --timeout 10 --memory-size 1024 --debug 
+```
+
+- cp5
