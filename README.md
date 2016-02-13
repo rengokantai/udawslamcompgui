@@ -44,3 +44,24 @@ aws lambda create-function --region us-west-2 --function-name thumb --zip-file f
 ```
 
 - cp5
+lambda cmd:
+```
+aws lambda create-function --region us-west-2 --function-name kinesis --zip-file fileb://kinesis.zip --role arn:aws:iam::644126867916:role/kinesisrole --handler kinesis.handler --runtime nodejs --debug
+```
+invoke:
+```
+aws lambda invoke-async --function kinesis --invoke-args kinesis.txt --debug
+```
+create stream: (maunally test)
+```
+aws kinesis create-stream --stream-name kinesisstream --shard-count 1
+aws kinesis describe-stream --stream-name kinesisstream  //get stream arn
+```
+create event source mapping
+```
+aws lambda create-event-source-mapping --function-name kinesis --event-source arn:aws:kinesis:us-west-2:644126867916:stream/kinesisstream --batch-size 100 --starting-position TRIM_HORIZON
+```
+then
+```
+aws kinesis put-record --stream-name kinesisstream --data "ke test" --partition-key ke  (shardId-000000000000)
+```
